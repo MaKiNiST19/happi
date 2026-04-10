@@ -20,6 +20,7 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
   const [step, setStep] = useState<"welcome" | "method" | "date">("welcome");
   const [method, setMethod] = useState<"edd" | "lmp" | "born">("edd");
   const [dateValue, setDateValue] = useState("");
+  const [parentName, setParentName] = useState("");
   const [isAnimating, setIsAnimating] = useState(false);
 
   const handleSubmit = () => {
@@ -36,6 +37,7 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
     }
 
     saveUserProfile({
+      parentName: parentName.trim() || undefined,
       expectedDueDate,
       onboardingCompleted: true,
       notifications: {
@@ -205,12 +207,28 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
               </p>
             </div>
 
-            <div className="bg-white rounded-2xl p-6 shadow-sm mb-6">
+            <div className="bg-white/80 rounded-[32px] p-8 shadow-[0_8px_32px_rgba(0,0,0,0.04)] border border-rose-50 mb-6 backdrop-blur-sm">
+              <label className="block text-sm font-bold text-gray-700 mb-2 pl-2">Size Nasıl Hitap Edelim?</label>
+              <input
+                type="text"
+                value={parentName}
+                onChange={(e) => setParentName(e.target.value)}
+                placeholder="Örn: Ayşe"
+                className="w-full text-center text-xl py-4 px-4 mb-6 border-2 border-gray-100 rounded-2xl focus:border-rose-400 focus:ring-4 focus:ring-rose-100 outline-none transition-all duration-300 text-gray-700 bg-white/60"
+              />
+
+              <label className="block text-sm font-bold text-gray-700 mb-2 pl-2">
+                {method === "edd"
+                  ? "Tahmini Doğum Tarihiniz"
+                  : method === "lmp"
+                  ? "Son Adet Tarihiniz"
+                  : "Bebeğinizin Doğum Tarihi"}
+              </label>
               <input
                 type="date"
                 value={dateValue}
                 onChange={(e) => setDateValue(e.target.value)}
-                className="w-full text-center text-xl py-4 px-4 border-2 border-gray-200 rounded-xl focus:border-rose-400 focus:ring-4 focus:ring-rose-100 outline-none transition-all duration-200 text-gray-700"
+                className="w-full text-center text-xl py-4 px-4 border-2 border-gray-100 rounded-2xl focus:border-rose-400 focus:ring-4 focus:ring-rose-100 outline-none transition-all duration-300 text-gray-700 bg-white/60"
               />
               
               {dateValue && method === "lmp" && (

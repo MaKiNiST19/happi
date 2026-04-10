@@ -80,15 +80,21 @@ export default function TodayCard({ dayInfo, dateCalc }: TodayCardProps) {
           {/* İlerleme Çubuğu */}
           <div className="mt-2">
             <div className="flex items-center justify-between mb-1.5">
-              <span className="text-xs text-white/60">İlerleme</span>
+              <span className="text-xs text-white/60">
+                {dayInfo.period === "pregnancy" ? "Doğuma İlerleme" : "Büyüme Serüveni (3 Yaş)"}
+              </span>
               <span className="text-xs text-white/80 font-medium">
-                %{Math.round(dateCalc.percentComplete)}
+                %{dayInfo.period === "pregnancy" 
+                   ? Math.round(dateCalc.percentComplete) 
+                   : Math.min(100, Math.round(((dateCalc.currentDay - 280) / (3 * 365)) * 100))}
               </span>
             </div>
-            <div className="w-full h-2 bg-white/20 rounded-full overflow-hidden backdrop-blur-sm">
+            <div className="w-full h-2 bg-white/20 rounded-full overflow-hidden backdrop-blur-sm shadow-[inset_0_1px_2px_rgba(0,0,0,0.1)]">
               <div
-                className="h-full bg-white/80 rounded-full transition-all duration-1000 ease-out"
-                style={{ width: `${dateCalc.percentComplete}%` }}
+                className="h-full bg-white/90 rounded-full transition-all duration-1000 ease-out shadow-[0_0_8px_rgba(255,255,255,0.8)]"
+                style={{ width: `${dayInfo.period === "pregnancy" 
+                   ? dateCalc.percentComplete 
+                   : Math.min(100, Math.max(0, ((dateCalc.currentDay - 280) / (3 * 365)) * 100))}%` }}
               />
             </div>
           </div>

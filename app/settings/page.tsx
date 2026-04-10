@@ -16,9 +16,9 @@ import {
 import { formatDateTurkish, calculateCurrentDate, getPeriodName } from "@/lib/utils/dateUtils";
 import type { UserProfile } from "@/lib/types";
 
-export default function SettingsPage() {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [dateValue, setDateValue] = useState("");
+  const [nameValue, setNameValue] = useState("");
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
 
@@ -27,7 +27,9 @@ export default function SettingsPage() {
     setProfile(p);
     if (p?.expectedDueDate) {
       const date = new Date(p.expectedDueDate);
-      setDateValue(date.toISOString().split("T")[0]);
+      if (p.parentName) {
+        setNameValue(p.parentName);
+      }
     }
   }, []);
 
@@ -37,6 +39,19 @@ export default function SettingsPage() {
       const updatedProfile: UserProfile = {
         ...profile,
         expectedDueDate: new Date(newDate).toISOString(),
+      };
+      saveUserProfile(updatedProfile);
+      setProfile(updatedProfile);
+      showSaveMessage();
+    }
+  };
+
+  const handleNameChange = (newName: string) => {
+    setNameValue(newName);
+    if (profile) {
+      const updatedProfile: UserProfile = {
+        ...profile,
+        parentName: newName.trim() || undefined,
       };
       saveUserProfile(updatedProfile);
       setProfile(updatedProfile);
@@ -100,31 +115,55 @@ export default function SettingsPage() {
                 label="Dönem"
                 value={getPeriodName(dateCalc.period)}
               />
-              <InfoItem label="Hafta" value={`${dateCalc.currentWeek}. Hafta`} />
               <InfoItem
-                label="Tahmini Doğum"
+                label="Hafta"
+                value={
+                  dateCalc.period === "pregnancy"
+                    ? `${dateCalc.currentWeek}. Hafta`
+                    : `Doğumdan sonraki ${Math.max(1, dateCalc.currentWeek - 40)}. Hafta`
+                }
+              />
+              <InfoItem
+                label={dateCalc.period === "pregnancy" ? "Tahmini Doğum" : "Doğum Tarihi"}
                 value={formatDateTurkish(new Date(profile.expectedDueDate))}
               />
               <InfoItem
                 label="İlerleme"
-                value={`%${Math.round(dateCalc.percentComplete)}`}
+                value={`%${
+                  dateCalc.period === "pregnancy"
+                    ? Math.round(dateCalc.percentComplete)
+                    : Math.min(100, Math.round(((dateCalc.currentDay - 280) / (3 * 365)) * 100))
+                }`}
               />
             </div>
           </div>
         )}
 
-        {/* Tarih Ayarı */}
+        {/* Kişisel Bilgiler */}
         <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
           <h2 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
-            <span>📅</span> Tahmini Doğum Tarihi
+            <span>👤</span> Profil Bilgileri
           </h2>
+          
+          <label className="block text-xs font-semibold text-gray-500 mb-1 ml-1 uppercase tracking-wider">İsminiz</label>
+          <input
+            type="text"
+            value={nameValue}
+            onChange={(e) => handleNameChange(e.target.value)}
+            placeholder="Size nasıl hitap edelim?"
+            className="w-full py-3 px-4 mb-4 border-2 border-gray-100 rounded-xl focus:border-rose-400 focus:ring-4 focus:ring-rose-100 outline-none transition-all duration-200 text-gray-700 bg-gray-50"
+          />
+
+          <label className="block text-xs font-semibold text-gray-500 mb-1 ml-1 uppercase tracking-wider">
+            {dateCalc?.period === "pregnancy" ? "Tahmini Doğum Tarihi" : "Doğum Tarihi"}
+          </label>
           <input
             type="date"
             value={dateValue}
             onChange={(e) => handleDateChange(e.target.value)}
-            className="w-full py-3 px-4 border-2 border-gray-200 rounded-xl focus:border-rose-400 focus:ring-4 focus:ring-rose-100 outline-none transition-all duration-200 text-gray-700 bg-gray-50"
+            className="w-full py-3 px-4 border-2 border-gray-100 rounded-xl focus:border-rose-400 focus:ring-4 focus:ring-rose-100 outline-none transition-all duration-200 text-gray-700 bg-gray-50"
           />
-          <p className="text-xs text-gray-400 mt-2">
+          <p className="text-xs text-gray-400 mt-2 ml-1">
             Tarihi değiştirmek tüm hesaplamaları günceller.
           </p>
         </div>

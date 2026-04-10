@@ -81,7 +81,7 @@ export default function HomePage() {
           <div>
             <p className="text-sm text-gray-400">Merhaba 👋</p>
             <h1 className="text-2xl font-bold text-gray-800">
-              Happi
+              {profile?.parentName ? profile.parentName : "Happi"}
             </h1>
           </div>
           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-rose-400 to-orange-400 flex items-center justify-center text-white text-lg shadow-lg shadow-rose-400/20">

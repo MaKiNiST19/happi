@@ -7,6 +7,8 @@
 
 /** Kullanıcı profili - hamilelik/bebek bilgileri */
 export interface UserProfile {
+  /** Ebeveynin adı */
+  parentName?: string;
   /** Beklenen doğum tarihi (ISO string) */
   expectedDueDate: string;
   /** Bebeğin adı (opsiyonel) */

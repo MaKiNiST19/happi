@@ -128,7 +128,7 @@ export function getTodayInfo(expectedDueDate: string): DayInfo | null {
     if (!weekInfo) return null;
     return {
         day: calc.currentDay, // total days
-        week: postnatalWeek,
+        week: calc.currentWeek, // Raw total week since start of pregnancy
         dayOfWeek: calc.dayOfWeek,
         period: calc.period,
         title: weekInfo.title,
@@ -218,10 +218,10 @@ export function formatWeekDay(week: number, day: number, period: string): string
   if (period === "pregnancy") {
     return `${week}. Hafta, ${day}. Gün`;
   }
-  
   // Doğum sonrası
   const postnatalWeek = week - 40;
-  if (postnatalWeek <= 0) return "Doğum Günü! 🎉";
+  if (postnatalWeek <= 0 && day === 1) return "Doğum Günü! 🎉";
+  if (postnatalWeek <= 0) return "Hoş Geldin Bebek! 🎉";
   
   const months = Math.floor((postnatalWeek * 7) / 30.44);
   const years = Math.floor(months / 12);
