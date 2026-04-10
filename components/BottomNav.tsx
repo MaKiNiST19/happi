@@ -17,7 +17,7 @@ const navItems = [
     label: "Ana Sayfa",
     icon: (active: boolean) => (
       <svg
-        className={`w-6 h-6 transition-colors ${active ? "text-rose-500" : "text-gray-400"}`}
+        className={`w-6 h-6 transition-colors ${active ? "text-brand-primary" : "text-brand-light-gray"}`}
         fill={active ? "currentColor" : "none"}
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -36,7 +36,7 @@ const navItems = [
     label: "Zaman Tüneli",
     icon: (active: boolean) => (
       <svg
-        className={`w-6 h-6 transition-colors ${active ? "text-rose-500" : "text-gray-400"}`}
+        className={`w-6 h-6 transition-colors ${active ? "text-brand-primary" : "text-brand-light-gray"}`}
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -58,7 +58,7 @@ const navItems = [
     label: "Keşfet",
     icon: (active: boolean) => (
       <svg
-        className={`w-6 h-6 transition-colors ${active ? "text-rose-500" : "text-gray-400"}`}
+        className={`w-6 h-6 transition-colors ${active ? "text-brand-primary" : "text-brand-light-gray"}`}
         fill={active ? "currentColor" : "none"}
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -77,7 +77,7 @@ const navItems = [
     label: "Ayarlar",
     icon: (active: boolean) => (
       <svg
-        className={`w-6 h-6 transition-colors ${active ? "text-rose-500" : "text-gray-400"}`}
+        className={`w-6 h-6 transition-colors ${active ? "text-brand-primary" : "text-brand-light-gray"}`}
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -114,20 +114,20 @@ export default function BottomNav() {
               href={item.href}
               className={`relative flex flex-col items-center justify-center py-2 px-3 rounded-2xl transition-all duration-300 min-w-[64px] ${
                 isActive
-                  ? "text-rose-500"
-                  : "text-gray-400 hover:text-gray-600 active:scale-95"
+                  ? "text-brand-primary"
+                  : "text-brand-light-gray hover:text-brand-gray active:scale-95"
               }`}
             >
               {/* Active Background Pill */}
               {isActive && (
-                <div className="absolute inset-0 bg-rose-50 rounded-2xl -z-10 animate-fade-in" />
+                <div className="absolute inset-0 bg-brand-primary/10 rounded-2xl -z-10 animate-fade-in" />
               )}
               <div className="relative z-10 flex flex-col items-center justify-center">
                 <div className={`transition-transform duration-300 ${isActive ? '-translate-y-1' : ''}`}>
                   {item.icon(isActive)}
                 </div>
                 {isActive && (
-                  <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.8)]" />
+                  <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-brand-primary shadow-[0_0_8px_rgba(232,86,66,0.6)]" />
                 )}
               </div>
               {isActive ? null : (
