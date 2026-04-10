@@ -61,12 +61,12 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <link rel="apple-touch-icon" href="/icon-512x512.png" />
       </head>
-      <body className="min-h-full bg-brand-bg text-brand-text antialiased relative overflow-x-hidden">
-        {/* Soft Organic Background Decorations */}
+      <body className="min-h-full text-brand-text antialiased relative overflow-x-hidden">
+        {/* Deep Space Background Decorations */}
         <div className="pointer-events-none fixed inset-0 z-[-1] overflow-hidden">
-          <div className="absolute -top-[10%] -right-[15%] w-[60%] h-[40%] rounded-full bg-brand-blue/10 blur-[80px]" />
-          <div className="absolute top-[30%] -left-[20%] w-[50%] h-[50%] rounded-full bg-brand-primary/10 blur-[80px]" />
-          <div className="absolute -bottom-[10%] left-[20%] w-[70%] h-[40%] rounded-full bg-brand-mint/10 blur-[80px]" />
+          <div className="absolute top-0 right-0 w-[80%] h-[50%] rounded-full bg-brand-primary/20 blur-[100px] opacity-60 mix-blend-screen" />
+          <div className="absolute bottom-[10%] -left-[20%] w-[60%] h-[60%] rounded-full bg-brand-blue/20 blur-[120px] opacity-50 mix-blend-screen" />
+          <div className="absolute top-[40%] left-[20%] w-[50%] h-[50%] rounded-full bg-[#1E2D4A]/40 blur-[90px] opacity-70" />
         </div>
         
         <div className="max-w-lg mx-auto min-h-screen relative">

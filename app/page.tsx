@@ -75,18 +75,25 @@ export default function HomePage() {
 
   return (
     <div className="animate-fade-in pb-10">
-      {/* Header */}
-      <header className="px-6 pt-10 pb-4">
-        <div className="flex flex-col">
-          <p className="text-sm font-medium text-brand-gray/80 tracking-wide mb-1 opacity-80 uppercase">Merhaba</p>
-          <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-serif font-black tracking-tight text-brand-text">
-              {profile?.parentName ? profile.parentName : "Happi"}
-            </h1>
-            <div className="w-12 h-12 rounded-full bg-white border border-brand-primary/20 flex items-center justify-center text-xl shadow-sm text-brand-primary shadow-brand-primary/10">
-              🌱
-            </div>
-          </div>
+      {/* Modern Top Header matched with the screenshot */}
+      <header className="px-6 pt-12 pb-2">
+        <div className="max-w-sm mx-auto flex items-center justify-between mb-8">
+          <button className="w-10 h-10 rounded-full bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center text-white/80 hover:bg-white/10 transition-colors">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          
+          <button className="w-10 h-10 rounded-full bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center text-white/80 hover:bg-white/10 transition-colors">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+          </button>
+        </div>
+        
+        <div className="max-w-sm mx-auto text-center">
+          <p className="text-brand-text-muted/80 text-sm font-medium tracking-widest uppercase mb-2">Merhaba</p>
+          <h1 className="text-4xl font-sans font-semibold tracking-tight text-white px-4 leading-tight">
+            Hey <span className="text-brand-primary drop-shadow-[0_0_15px_rgba(133,82,242,0.8)]">{profile?.parentName ? profile.parentName : "Happi"}</span>,
+            <br />
+            <span className="text-white/90">what's on your mind?</span>
+          </h1>
         </div>
       </header>
 
@@ -97,47 +104,50 @@ export default function HomePage() {
 
       {/* Hafta Detayları */}
       {weekDetails && (
-        <div className="px-5 mt-6">
+        <div className="px-5 mt-8 max-w-sm mx-auto">
           {/* Bebek Boyutu */}
           {weekDetails.babySize && (
-            <div className="bg-white rounded-[24px] p-5 shadow-sm border border-brand-light-gray/20 mb-4 transition-all hover:shadow-md">
+            <div className="glass-folder rounded-3xl p-5 mb-5 group hover:scale-[1.02] transition-transform cursor-pointer">
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-full bg-brand-primary/10 flex items-center justify-center text-3xl">
+                <div className="w-14 h-14 rounded-full bg-brand-blue/20 flex items-center justify-center text-3xl shadow-[inset_0_0_15px_rgba(255,255,255,0.1)]">
                   🍎
                 </div>
                 <div>
-                  <p className="text-xs uppercase tracking-widest text-brand-gray mb-1">Bebeğin Boyutu</p>
-                  <p className="font-bold text-lg text-brand-text">{weekDetails.babySize}</p>
+                  <p className="text-xs uppercase tracking-widest text-brand-text-muted mb-1">Bebeğin Boyutu</p>
+                  <p className="font-bold text-lg text-white group-hover:text-brand-mint transition-colors">{weekDetails.babySize}</p>
                 </div>
               </div>
             </div>
           )}
 
           {/* Detaylar */}
-          <div className="bg-white rounded-[24px] p-6 shadow-sm border border-brand-light-gray/20 mb-4">
-            <h3 className="font-serif font-bold text-xl text-brand-text mb-4 flex items-center gap-2">
-              <span className="text-brand-blue">📋</span> Bu Hafta Neler Oluyor?
+          <div className="glass-folder rounded-3xl p-6 mb-5 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-brand-primary/10 blur-2xl rounded-full mix-blend-screen" />
+            <h3 className="font-sans font-semibold text-lg text-white mb-5 flex items-center gap-3">
+              <span className="w-8 h-8 rounded-full bg-brand-blue/20 flex items-center justify-center text-sm">📋</span> 
+              Bu Hafta Neler Oluyor?
             </h3>
-            <ul className="space-y-3">
+            <ul className="space-y-4">
               {weekDetails.details.map((detail, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-[15px] font-medium text-brand-text/80">
-                  <span className="text-brand-mint text-lg mt-0.5 flex-shrink-0">•</span>
-                  <span className="leading-relaxed">{detail}</span>
+                <li key={idx} className="flex items-start gap-4 text-[14px] font-normal text-brand-text-muted">
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-primary mt-1.5 flex-shrink-0 shadow-[0_0_8px_rgba(133,82,242,0.8)]" />
+                  <span className="leading-relaxed text-brand-text/90">{detail}</span>
                 </li>
               ))}
             </ul>
           </div>
 
           {/* İpuçları */}
-          <div className="bg-brand-primary/5 rounded-[24px] p-6 border border-brand-primary/10 mb-6">
-            <h3 className="font-serif font-bold text-xl text-brand-primary mb-4 flex items-center gap-2">
-              <span className="text-2xl">💡</span> İpuçları
+          <div className="glass-folder rounded-3xl p-6 mb-6">
+            <h3 className="font-sans font-semibold text-lg text-white mb-5 flex items-center gap-3">
+              <span className="w-8 h-8 rounded-full bg-brand-mint/20 flex items-center justify-center text-sm">💡</span> 
+              İpuçları
             </h3>
-            <ul className="space-y-3">
+            <ul className="space-y-4">
               {weekDetails.tips.map((tip, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-[15px] font-medium text-brand-text/80">
-                  <span className="text-brand-primary mt-0.5 flex-shrink-0">✦</span>
-                  <span className="leading-relaxed">{tip}</span>
+                <li key={idx} className="flex items-start gap-4 text-[14px] font-normal text-brand-text-muted">
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-mint mt-1.5 flex-shrink-0 shadow-[0_0_8px_rgba(168,202,255,0.8)]" />
+                  <span className="leading-relaxed text-brand-text/90">{tip}</span>
                 </li>
               ))}
             </ul>
