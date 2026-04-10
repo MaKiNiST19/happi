@@ -87,13 +87,18 @@ export default function HomePage() {
           </button>
         </div>
         
-        <div className="max-w-sm mx-auto text-center">
-          <p className="text-brand-text-muted/80 text-sm font-medium tracking-widest uppercase mb-2">Merhaba</p>
-          <h1 className="text-4xl font-sans font-semibold tracking-tight text-white px-4 leading-tight">
-            Hey <span className="text-brand-primary drop-shadow-[0_0_15px_rgba(133,82,242,0.8)]">{profile?.parentName ? profile.parentName : "Happi"}</span>,
-            <br />
-            <span className="text-white/90">what's on your mind?</span>
+        <div className="max-w-sm mx-auto">
+          <p className="text-brand-text-muted/70 text-xs font-medium tracking-widest uppercase mb-1">
+            {new Date().getHours() < 12 ? "Günaydın" : new Date().getHours() < 18 ? "İyi günler" : "İyi akşamlar"} 👋
+          </p>
+          <h1 className="text-3xl font-sans font-bold tracking-tight text-white leading-tight">
+            Merhaba,{" "}
+            <span className="text-brand-primary drop-shadow-[0_0_15px_rgba(133,82,242,0.8)]">
+              {profile?.parentName ? profile.parentName : "Happi"}
+            </span>
+            !
           </h1>
+          <p className="text-brand-text-muted/70 text-sm mt-1">Bugün nasılsın?</p>
         </div>
       </header>
 

@@ -101,10 +101,10 @@ export default function BottomNav() {
           </button>
         </div>
 
-        <div className="flex items-center justify-between px-2 py-3 bg-[#0d1629]/80 backdrop-blur-xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] rounded-full">
+        <div className="flex items-center justify-between px-3 py-2 bg-[#0d1629]/90 backdrop-blur-xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] rounded-[28px]">
         {navItems.map((item, idx) => {
           if (item.isSpacer) {
-            return <div key={`spacer-${idx}`} className="w-16" />;
+            return <div key={`spacer-${idx}`} className="w-14" />;
           }
 
           const isActive = pathname === item.href;
@@ -113,20 +113,23 @@ export default function BottomNav() {
             <Link
               key={item.href}
               href={item.href}
-              className={`relative flex flex-col items-center justify-center py-2 px-3 rounded-2xl transition-all duration-300 min-w-[64px] ${
+              className={`relative flex flex-col items-center justify-center py-2 px-3 rounded-2xl transition-all duration-300 min-w-[60px] gap-1 ${
                 isActive
                   ? "text-brand-primary"
                   : "text-brand-gray hover:text-white active:scale-95"
               }`}
             >
-              <div className="relative z-10 flex flex-col items-center justify-center">
-                <div className={`transition-transform duration-300 ${isActive ? '-translate-y-1' : ''}`}>
-                  {item.icon(isActive)}
-                </div>
-                {isActive && (
-                  <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-brand-primary shadow-[0_0_8px_rgba(133,82,242,0.8)]" />
-                )}
+              {isActive && (
+                <div className="absolute inset-0 bg-brand-primary/10 rounded-2xl" />
+              )}
+              <div className={`relative z-10 transition-transform duration-300 ${isActive ? "scale-110" : ""}`}>
+                {item.icon(isActive)}
               </div>
+              <span className={`relative z-10 text-[10px] font-medium tracking-wide transition-all duration-300 ${
+                isActive ? "text-brand-primary" : "text-brand-gray/70"
+              }`}>
+                {item.label}
+              </span>
             </Link>
           );
         })}

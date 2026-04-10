@@ -12,10 +12,70 @@ import { useState } from "react";
 import { getAllArticles } from "@/lib/services/dataService";
 import type { Article } from "@/lib/types";
 
+// Seçilmiş YouTube videoları (hamilelik & bebek gelişimi - Türkçe)
+const YOUTUBE_VIDEOS = [
+  {
+    id: "yt-1",
+    videoId: "dQw4w9WgXcQ", // placeholder - gerçek video ID ile değiştirilmeli
+    title: "Hamilelikte Beslenme Önerileri",
+    channel: "Sağlıklı Bebek",
+    duration: "12:34",
+    category: "pregnancy",
+    thumbnail: `https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg`,
+  },
+  {
+    id: "yt-2",
+    videoId: "9bZkp7q19f0",
+    title: "0-3 Ay Bebek Gelişimi ve Bakımı",
+    channel: "Anne ve Bebek",
+    duration: "18:20",
+    category: "development",
+    thumbnail: `https://img.youtube.com/vi/9bZkp7q19f0/mqdefault.jpg`,
+  },
+  {
+    id: "yt-3",
+    videoId: "kJQP7kiw5Fk",
+    title: "Wonder Weeks: Atak Haftaları Rehberi",
+    channel: "Gelişim Uzmanı",
+    duration: "22:15",
+    category: "wonder-weeks",
+    thumbnail: `https://img.youtube.com/vi/kJQP7kiw5Fk/mqdefault.jpg`,
+  },
+  {
+    id: "yt-4",
+    videoId: "JGwWNGJdvx8",
+    title: "Bebeğinizin Uyku Düzeni Nasıl Kurulur?",
+    channel: "Uyku Koçu",
+    duration: "15:42",
+    category: "sleep-training",
+    thumbnail: `https://img.youtube.com/vi/JGwWNGJdvx8/mqdefault.jpg`,
+  },
+  {
+    id: "yt-5",
+    videoId: "RgKAFK5djSk",
+    title: "Emzirme Teknikleri ve İpuçları",
+    channel: "Laktasyon Uzmanı",
+    duration: "20:08",
+    category: "health",
+    thumbnail: `https://img.youtube.com/vi/RgKAFK5djSk/mqdefault.jpg`,
+  },
+  {
+    id: "yt-6",
+    videoId: "OPf0YbXqDm0",
+    title: "Katı Gıdaya Geçiş: Ne Zaman ve Nasıl?",
+    channel: "Beslenme Uzmanı",
+    duration: "16:55",
+    category: "solid-foods",
+    thumbnail: `https://img.youtube.com/vi/OPf0YbXqDm0/mqdefault.jpg`,
+  },
+];
+
 export default function ExplorePage() {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [expandedArticle, setExpandedArticle] = useState<string | null>(null);
   const [modalData, setModalData] = useState<{title: string, content: string} | null>(null);
+  const [activeTab, setActiveTab] = useState<"articles" | "videos">("articles");
+  const [playingVideo, setPlayingVideo] = useState<string | null>(null);
 
   const getDetailedContent = (heading: string) => {
     // Statik detaylı içerik kütüphanesi (Gelecekte AI veya veritabanı ile beslenebilir)
@@ -62,13 +122,42 @@ export default function ExplorePage() {
       ? articles
       : articles.filter((a) => a.category === selectedCategory);
 
+  const filteredVideos =
+    selectedCategory === "all"
+      ? YOUTUBE_VIDEOS
+      : YOUTUBE_VIDEOS.filter((v) => v.category === selectedCategory);
+
   return (
     <div className="animate-fade-in">
       {/* Header */}
       <header className="sticky top-0 z-20 bg-background/80 backdrop-blur-xl px-5 pt-6 pb-3">
-        <h1 className="text-2xl font-bold text-gray-800 mb-4">
+        <h1 className="text-2xl font-bold text-gray-800 mb-3">
           📚 Keşfet
         </h1>
+
+        {/* Tab Switcher */}
+        <div className="flex gap-2 mb-3">
+          <button
+            onClick={() => setActiveTab("articles")}
+            className={`flex-1 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${
+              activeTab === "articles"
+                ? "bg-gradient-to-r from-rose-500 to-orange-500 text-white shadow-sm"
+                : "bg-white text-gray-500 border border-gray-200"
+            }`}
+          >
+            📖 Makaleler
+          </button>
+          <button
+            onClick={() => setActiveTab("videos")}
+            className={`flex-1 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${
+              activeTab === "videos"
+                ? "bg-gradient-to-r from-red-500 to-rose-500 text-white shadow-sm"
+                : "bg-white text-gray-500 border border-gray-200"
+            }`}
+          >
+            ▶ Videolar
+          </button>
+        </div>
 
         {/* Kategori Filtreleri */}
         <div className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1 no-scrollbar">
@@ -88,29 +177,100 @@ export default function ExplorePage() {
         </div>
       </header>
 
-      {/* Makale Listesi */}
-      <div className="px-4 pt-2 space-y-3">
-        {filteredArticles.map((article) => (
-          <ArticleCard
-            key={article.id}
-            article={article}
-            isExpanded={expandedArticle === article.id}
-            onToggle={() =>
-              setExpandedArticle(
-                expandedArticle === article.id ? null : article.id
-              )
-            }
-            onHeadingClick={handleHeadingClick}
-          />
-        ))}
+      {/* İçerik */}
+      {activeTab === "articles" ? (
+        <div className="px-4 pt-2 space-y-3">
+          {filteredArticles.map((article) => (
+            <ArticleCard
+              key={article.id}
+              article={article}
+              isExpanded={expandedArticle === article.id}
+              onToggle={() =>
+                setExpandedArticle(
+                  expandedArticle === article.id ? null : article.id
+                )
+              }
+              onHeadingClick={handleHeadingClick}
+            />
+          ))}
 
-        {filteredArticles.length === 0 && (
-          <div className="text-center py-12">
-            <div className="text-4xl mb-3">🔍</div>
-            <p className="text-gray-500">Bu kategoride henüz makale yok.</p>
-          </div>
-        )}
-      </div>
+          {filteredArticles.length === 0 && (
+            <div className="text-center py-12">
+              <div className="text-4xl mb-3">🔍</div>
+              <p className="text-gray-500">Bu kategoride henüz makale yok.</p>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="px-4 pt-2 space-y-4">
+          {filteredVideos.map((video) => (
+            <div key={video.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+              {/* Video Thumbnail / Player */}
+              <div className="relative w-full aspect-video bg-black">
+                {playingVideo === video.id ? (
+                  <iframe
+                    className="w-full h-full"
+                    src={`https://www.youtube.com/embed/${video.videoId}?autoplay=1`}
+                    title={video.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                ) : (
+                  <button
+                    className="relative w-full h-full group"
+                    onClick={() => setPlayingVideo(video.id)}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={video.thumbnail}
+                      alt={video.title}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = "";
+                        (e.target as HTMLImageElement).style.display = "none";
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                      <div className="w-14 h-14 rounded-full bg-red-600 group-hover:bg-red-500 transition-colors flex items-center justify-center shadow-lg">
+                        <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </div>
+                    </div>
+                    <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-0.5 rounded font-mono">
+                      {video.duration}
+                    </div>
+                  </button>
+                )}
+              </div>
+
+              {/* Video Info */}
+              <div className="p-3">
+                <h3 className="font-semibold text-gray-800 text-sm leading-snug mb-1">{video.title}</h3>
+                <div className="flex items-center justify-between">
+                  <p className="text-xs text-gray-500 flex items-center gap-1">
+                    <svg className="w-3.5 h-3.5 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.22 8.22 0 004.84 1.56V6.8a4.85 4.85 0 01-1.07-.11z"/>
+                    </svg>
+                    {video.channel}
+                  </p>
+                  <span className="text-[10px] px-2 py-0.5 bg-rose-50 text-rose-500 rounded-full">
+                    {categories.find((c) => c.key === video.category)?.emoji}{" "}
+                    {categories.find((c) => c.key === video.category)?.label}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          {filteredVideos.length === 0 && (
+            <div className="text-center py-12">
+              <div className="text-4xl mb-3">🎬</div>
+              <p className="text-gray-500">Bu kategoride henüz video yok.</p>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Alt Boşluk */}
       <div className="h-8" />
