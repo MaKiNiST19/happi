@@ -15,7 +15,7 @@ import {
 } from "@/lib/services/dataService";
 import { formatDateTurkish, calculateCurrentDate, getPeriodName } from "@/lib/utils/dateUtils";
 import type { UserProfile } from "@/lib/types";
-
+export default function SettingsPage() {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [dateValue, setDateValue] = useState("");
   const [nameValue, setNameValue] = useState("");
