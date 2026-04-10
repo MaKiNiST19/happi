@@ -29,16 +29,18 @@ export default function TodayCard({ dayInfo, dateCalc }: TodayCardProps) {
 
   return (
     <div className="px-4 py-2">
-      {/* Ana Kart */}
-      <div className="relative overflow-hidden rounded-3xl shadow-xl">
-        {/* Gradient Arka Plan */}
-        <div className={`absolute inset-0 bg-gradient-to-br ${periodColor} opacity-90`} />
+      <div className="group relative overflow-hidden rounded-[30px] border border-white/50 bg-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.1)] backdrop-blur-md transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_30px_60px_rgba(0,0,0,0.15)]">
         
-        {/* Dekoratif elementler */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-12 -right-12 w-40 h-40 rounded-full bg-white/10 blur-xl" />
-          <div className="absolute -bottom-8 -left-8 w-32 h-32 rounded-full bg-white/10 blur-xl" />
-          <div className="absolute top-1/2 right-1/3 w-24 h-24 rounded-full bg-white/5 blur-lg" />
+        {/* Animated Gradient Background Base */}
+        <div className={`absolute inset-0 bg-gradient-to-br ${periodColor} opacity-90 transition-opacity duration-700 group-hover:opacity-100`} />
+        
+        {/* Complex Uiverse-like Decorations */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute -top-16 -right-16 h-64 w-64 animate-pulse-glow rounded-full bg-white/20 blur-3xl mix-blend-overlay" />
+          <div className="absolute -bottom-16 -left-16 h-48 w-48 animate-float rounded-full bg-white/20 blur-2xl mix-blend-overlay" />
+          <div className="absolute top-1/2 left-1/3 h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/10 blur-xl mix-blend-soft-light" />
+          {/* Shimmer Effect */}
+          <div className="animate-shimmer absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         </div>
 
         {/* İçerik */}
@@ -56,10 +58,12 @@ export default function TodayCard({ dayInfo, dateCalc }: TodayCardProps) {
           </div>
 
           {/* Emoji */}
-          <div className="text-5xl mb-3">{dayInfo.emoji}</div>
+          <div className="mb-4 inline-flex items-center justify-center rounded-2xl bg-white/20 p-4 shadow-[inset_0_2px_4px_rgba(255,255,255,0.4)] backdrop-blur-md transition-transform duration-300 group-hover:scale-110">
+            <span className="text-5xl drop-shadow-md">{dayInfo.emoji}</span>
+          </div>
 
           {/* Hafta/Gün Başlığı */}
-          <h2 className="text-3xl font-bold text-white mb-1">
+          <h2 className="mb-1 text-3xl font-extrabold tracking-tight text-white drop-shadow-sm">
             {weekDayText}
           </h2>
 
@@ -135,12 +139,14 @@ function QuickInfoCard({
   small?: boolean;
 }) {
   return (
-    <div className={`${bgColor} rounded-2xl p-3 text-center`}>
-      <div className="text-lg mb-1">{emoji}</div>
-      <div className={`font-bold text-gray-800 ${small ? "text-xs" : "text-lg"}`}>
+    <div className={`glass-card ${bgColor.replace('bg-', 'bg-')}/50 relative overflow-hidden rounded-[20px] p-4 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg`}>
+      <div className="mb-2 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/50 text-xl shadow-sm backdrop-blur-sm">
+        {emoji}
+      </div>
+      <div className={`font-bold tracking-tight text-gray-800 ${small ? "text-sm" : "text-xl"}`}>
         {value}
       </div>
-      <div className="text-[10px] text-gray-500 mt-0.5">{label}</div>
+      <div className="mt-1 text-[11px] font-medium uppercase tracking-wider text-gray-500">{label}</div>
     </div>
   );
 }

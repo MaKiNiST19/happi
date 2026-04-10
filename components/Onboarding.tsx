@@ -53,41 +53,45 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-rose-50 via-orange-50 to-amber-50 transition-opacity duration-500 ${
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-[#FFFBF7] transition-opacity duration-700 ${
         isAnimating ? "opacity-0" : "opacity-100"
       }`}
     >
-      {/* Dekoratif arka plan elementleri */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-gradient-to-br from-rose-200/40 to-pink-300/40 blur-3xl animate-pulse" />
-        <div className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-gradient-to-br from-amber-200/40 to-orange-300/40 blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
-        <div className="absolute top-1/3 right-1/4 w-48 h-48 rounded-full bg-gradient-to-br from-sky-200/30 to-blue-300/30 blur-3xl animate-pulse" style={{ animationDelay: "2s" }} />
+      {/* Ultra-Modern Decorative Background Elements */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -top-32 -right-32 h-[500px] w-[500px] animate-pulse-glow rounded-full bg-rose-200/40 blur-[80px]" />
+        <div className="absolute -bottom-48 -left-48 h-[600px] w-[600px] animate-pulse-glow rounded-full bg-orange-200/30 blur-[100px]" style={{ animationDelay: "1.5s" }} />
+        <div className="absolute top-1/2 left-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 animate-float rounded-full bg-sky-200/20 blur-[120px]" style={{ animationDelay: "3s" }} />
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
       </div>
 
       <div className="relative px-6 w-full max-w-md mx-auto">
         {/* Welcome Step */}
         {step === "welcome" && (
-          <div className="text-center animate-fade-in">
-            <div className="text-7xl mb-6 animate-bounce-slow">🌱</div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-rose-500 to-orange-500 bg-clip-text text-transparent mb-4">
-              Happi
-            </h1>
-            <p className="text-lg text-gray-600 mb-2">
-              Bebeğinizin büyüme yolculuğunda
-            </p>
-            <p className="text-lg text-gray-600 mb-10">
-              yanınızdayız 💕
-            </p>
-            <p className="text-sm text-gray-400 mb-8">
-              Hamileliğin başından 3 yaşına kadar günlük bilgiler, gelişim takibi ve çok daha fazlası.
-            </p>
-            <button
-              onClick={() => setStep("method")}
-              className="w-full py-4 px-8 bg-gradient-to-r from-rose-500 to-orange-500 text-white font-semibold rounded-2xl shadow-lg shadow-rose-500/25 hover:shadow-xl hover:shadow-rose-500/30 active:scale-[0.98] transition-all duration-200 text-lg"
-            >
-              Başlayalım ✨
-            </button>
-          </div>
+            <div className="text-center animate-fade-in glass-card relative z-10 rounded-[40px] p-8 shadow-[0_8px_32px_rgba(0,0,0,0.04)]">
+              <div className="text-[80px] mb-6 animate-bounce-slow drop-shadow-xl">🌱</div>
+              <h1 className="text-5xl font-extrabold tracking-tight bg-gradient-to-br from-rose-500 via-orange-500 to-amber-500 bg-clip-text text-transparent mb-4 pb-2">
+                Happi
+              </h1>
+              <p className="text-xl font-medium text-gray-700 mb-2">
+                Bebeğinizin büyüme yolculuğunda
+              </p>
+              <p className="text-xl font-medium text-gray-700 mb-8">
+                yanınızdayız <span className="inline-block animate-pulse">💕</span>
+              </p>
+              <p className="text-sm text-gray-500 mb-10 leading-relaxed px-4">
+                Hamileliğin başından 3 yaşına kadar günlük bilgiler, gelişim takibi ve çok daha fazlası.
+              </p>
+              <button
+                onClick={() => setStep("method")}
+                className="group relative w-full overflow-hidden rounded-2xl bg-gradient-to-r from-rose-500 via-orange-500 to-rose-500 bg-[length:200%_auto] py-4 px-8 text-lg font-bold text-white shadow-[0_0_20px_rgba(244,63,94,0.4)] transition-all duration-300 hover:bg-[100%_center] hover:shadow-[0_0_30px_rgba(244,63,94,0.6)] hover:-translate-y-1 active:scale-[0.98]"
+              >
+                <div className="absolute inset-0 bg-white/20 opacity-0 transition-opacity group-hover:opacity-100" />
+                <span className="relative flex items-center justify-center gap-2">
+                  Serüvene Başla ✨
+                </span>
+              </button>
+            </div>
         )}
 
         {/* Method Selection Step */}
@@ -222,13 +226,16 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
             <button
               onClick={handleSubmit}
               disabled={!dateValue}
-              className={`w-full py-4 px-8 font-semibold rounded-2xl shadow-lg text-lg transition-all duration-200 ${
+              className={`group relative w-full overflow-hidden rounded-2xl py-4 px-8 text-lg font-bold transition-all duration-300 ${
                 dateValue
-                  ? "bg-gradient-to-r from-rose-500 to-orange-500 text-white shadow-rose-500/25 hover:shadow-xl hover:shadow-rose-500/30 active:scale-[0.98]"
+                  ? "bg-gradient-to-r from-rose-500 via-orange-500 to-rose-500 bg-[length:200%_auto] text-white shadow-[0_0_20px_rgba(244,63,94,0.4)] hover:bg-[100%_center] hover:shadow-[0_0_30px_rgba(244,63,94,0.6)] hover:-translate-y-1 active:scale-[0.98]"
                   : "bg-gray-200 text-gray-400 cursor-not-allowed shadow-none"
               }`}
             >
-              Happi'ye Başla 🚀
+              <div className="absolute inset-0 bg-white/20 opacity-0 transition-opacity group-hover:opacity-100" />
+              <span className="relative flex items-center justify-center gap-2">
+                Happi'ye Başla 🚀
+              </span>
             </button>
           </div>
         )}

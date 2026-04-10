@@ -38,28 +38,29 @@ export default function TimelineItem({ entry, isFirst, isLast }: TimelineItemPro
 
         {/* Nokta */}
         <div
-          className={`relative z-10 flex items-center justify-center rounded-full transition-all duration-300 ${
+          className={`relative z-10 flex items-center justify-center rounded-full transition-all duration-500 hover:scale-110 ${
             entry.isCurrentWeek
-              ? "w-12 h-12 shadow-lg"
+              ? "w-14 h-14 shadow-[0_0_20px_rgba(244,63,94,0.4)]"
               : entry.isPast
-              ? "w-8 h-8"
-              : "w-8 h-8"
+              ? "w-10 h-10 shadow-sm"
+              : "w-10 h-10 shadow-sm"
           }`}
         >
           {entry.isCurrentWeek ? (
             <>
-              <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${periodColor} animate-pulse`} />
-              <span className="relative text-xl">{entry.emoji}</span>
+              <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${periodColor} animate-pulse-glow border-2 border-white`} />
+              <span className="relative text-2xl drop-shadow-md">{entry.emoji}</span>
             </>
           ) : entry.isPast ? (
             <>
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-gray-300 to-gray-400" />
-              <span className="relative text-sm">{entry.emoji}</span>
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 border-2 border-white/50" />
+              <span className="relative text-lg opacity-80">{entry.emoji}</span>
             </>
           ) : (
             <>
-              <div className="absolute inset-0 rounded-full bg-gray-100 border-2 border-gray-200" />
-              <span className="relative text-sm opacity-50">{entry.emoji}</span>
+              <div className="absolute inset-0 rounded-full bg-white border border-gray-200" />
+              <div className="absolute inset-2 rounded-full bg-gray-50" />
+              <span className="relative text-base opacity-40 grayscale">{entry.emoji}</span>
             </>
           )}
         </div>
@@ -77,14 +78,17 @@ export default function TimelineItem({ entry, isFirst, isLast }: TimelineItemPro
 
       {/* İçerik Kartı */}
       <div
-        className={`flex-1 mb-4 rounded-2xl p-4 transition-all duration-300 ${
+        className={`group flex-1 mb-6 rounded-[24px] p-5 transition-all duration-500 ease-out hover:-translate-y-1 ${
           entry.isCurrentWeek
-            ? "bg-white shadow-lg border-2 border-rose-200 scale-[1.02]"
+            ? "glass-card border-none shadow-[0_10px_40px_rgba(0,0,0,0.08)] ring-1 ring-white/60 scale-[1.02] relative overflow-hidden"
             : entry.isPast
-            ? "bg-gray-50 opacity-70"
-            : "bg-white shadow-sm border border-gray-100"
+            ? "bg-white/40 backdrop-blur-sm shadow-sm ring-1 ring-gray-200/50 hover:bg-white/60"
+            : "bg-white/60 backdrop-blur-md shadow-sm ring-1 ring-gray-100 hover:shadow-md"
         }`}
       >
+        {entry.isCurrentWeek && (
+            <div className={`absolute -right-10 -top-10 w-32 h-32 bg-gradient-to-br ${periodColor} rounded-full blur-3xl opacity-20 pointer-events-none group-hover:scale-150 transition-transform duration-700`} />
+        )}
         {/* Hafta Etiketi */}
         <div className="flex items-center justify-between mb-1">
           <span

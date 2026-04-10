@@ -19,10 +19,14 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  /* Özel animasyonlar */
-  --animate-fade-in: fade-in 0.5s ease-out;
-  --animate-slide-up: slide-up 0.4s ease-out;
-  --animate-bounce-slow: bounce-slow 3s ease-in-out infinite;
+  /* Özel animasyonlar (Uiverse style) */
+  --animate-fade-in: fade-in 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-slide-up: slide-up 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-slide-down: slide-down 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-bounce-slow: bounce-slow 4s ease-in-out infinite;
+  --animate-pulse-glow: pulse-glow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-shimmer: shimmer 2.5s linear infinite;
 
   @keyframes fade-in {
     from {
@@ -51,8 +55,28 @@
       transform: translateY(0);
     }
     50% {
-      transform: translateY(-10px);
+      transform: translateY(-8px);
     }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.8; filter: brightness(1); }
+    50% { opacity: 1; filter: brightness(1.2) drop-shadow(0 0 12px rgba(255,255,255,0.4)); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(2deg); }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  @keyframes slide-down {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 }
 
@@ -106,11 +130,26 @@ input, textarea, [contenteditable] {
   transform: scale(0.98);
 }
 
-/* Glass Morphism */
+/* Glass Morphism - Uiverse Style */
 .glass {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+}
+
+.glass-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 100%);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2), 0 10px 40px rgba(0,0,0,0.06);
+}
+
+.animated-shimmer {
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+  background-size: 200% 100%;
 }
 
 /* iOS input zoom fix */

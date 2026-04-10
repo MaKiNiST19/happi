@@ -102,8 +102,9 @@ export default function BottomNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-xl border-t border-gray-200/50 safe-area-bottom">
-      <div className="max-w-lg mx-auto flex items-center justify-around px-2 py-1">
+    <nav className="fixed bottom-6 left-4 right-4 z-40 pointer-events-none safe-area-bottom">
+      <div className="max-w-md mx-auto pointer-events-auto">
+        <div className="flex items-center justify-around px-2 py-2 bg-white/80 backdrop-blur-[24px] border border-white shadow-[0_8px_32px_rgba(0,0,0,0.08)] rounded-[28px] supports-[backdrop-filter]:bg-white/60">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
 
@@ -111,28 +112,35 @@ export default function BottomNav() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex flex-col items-center justify-center py-2 px-3 rounded-xl transition-all duration-200 min-w-[64px] ${
+              className={`relative flex flex-col items-center justify-center py-2 px-3 rounded-2xl transition-all duration-300 min-w-[64px] ${
                 isActive
                   ? "text-rose-500"
-                  : "text-gray-400 hover:text-gray-600 active:bg-gray-100"
+                  : "text-gray-400 hover:text-gray-600 active:scale-95"
               }`}
             >
-              <div className="relative">
-                {item.icon(isActive)}
+              {/* Active Background Pill */}
+              {isActive && (
+                <div className="absolute inset-0 bg-rose-50 rounded-2xl -z-10 animate-fade-in" />
+              )}
+              <div className="relative z-10 flex flex-col items-center justify-center">
+                <div className={`transition-transform duration-300 ${isActive ? '-translate-y-1' : ''}`}>
+                  {item.icon(isActive)}
+                </div>
                 {isActive && (
-                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-rose-500" />
+                  <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.8)]" />
                 )}
               </div>
-              <span
-                className={`text-[10px] mt-1 font-medium transition-colors ${
-                  isActive ? "text-rose-500" : "text-gray-400"
-                }`}
-              >
-                {item.label}
-              </span>
+              {isActive ? null : (
+                <span
+                  className={`text-[10px] mt-1 font-medium transition-colors opacity-0 absolute`}
+                >
+                  {item.label}
+                </span>
+              )}
             </Link>
           );
         })}
+        </div>
       </div>
     </nav>
   );
